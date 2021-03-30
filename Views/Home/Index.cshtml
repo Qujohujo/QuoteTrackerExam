@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<Quote>
+
+<h1>Quotes</h1>
+<!--table that will list all information currently in the database-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Quote</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Citation</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var quote in Model)
+        {
+            <tr>
+                <td>@quote.Text</td>
+                <td>@quote.AuthorFirstName @quote.AuthorLastName</td>
+                <td>@quote.Date.ToShortDateString()</td>
+                <td>@quote.Subject</td>
+                <td>@quote.Citation</td>
+
+                <!--create two small forms here that can update and delete by passing the id of the listed movie as a hidden field value-->
+
+                <td>
+                    <form method="get" asp-action="EditQuote">
+                        <input name="quoteid" id="quoteid" type="hidden" value="@quote.QuoteId" />
+                        <button class="btn btn-light" type="submit">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="DeleteQuote">
+                        <input name="quoteid" id="quoteid" type="hidden" value="@quote.QuoteId" />
+                        <button class="btn btn-light" type="submit">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+
+
+        }
+    </tbody>
+</table>
